@@ -10,19 +10,24 @@ public class LineCheckImpl implements LineCheck {
 
     @Override
     public void checkExpression(String line) {
-        int count = 0;
-        int start = line.startsWith("-") ? 1 : 0;
-        for (int i = start; i < line.length(); i++) {
-            count = line.charAt(i) == '*' || line.charAt(i) == '/' || line.charAt(i) == '+' || line.charAt(i) == '-' ? ++count : count;
+        String mathOperators = line.startsWith("-") ?
+                line.substring(1).replaceAll("[0-9]", "") :
+                line.replaceAll("[0-9]", "");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < mathOperators.length(); i++) {
+            stringBuilder.append(mathOperators.charAt(i)).append(", ");
         }
-        if (count > 1) {
-            throw new IncorrectExpressionException();
+        stringBuilder.setLength(stringBuilder.length() - 2);
+
+        if (mathOperators.length() > 1) {
+            throw new IncorrectExpressionException("формат математической операции не удовлетворяет заданию, обнаружено несколько операторов: " + stringBuilder);
         }
     }
 
     @Override
     public CalcType findOutType(String[] array) {
-        if (NumberUtils.isNumber(array[0]) && NumberUtils.isNumber(array[2])) {
+        if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[2])) {
             return CalcType.ARABIAN;
         } else if (NumberUtils.isRomanNumber(array[0]) && NumberUtils.isRomanNumber(array[2])) {
             return CalcType.ROMAN;

@@ -7,7 +7,7 @@ public class NumberUtils {
     /**
      * проверка только целочисленных значений, дробные не проходят проверку
      */
-    public static boolean isNumber(String line) {
+    public static boolean isArabianNumber(String line) {
         if (StringUtils.isEmpty(line)) {
             return false;
         }

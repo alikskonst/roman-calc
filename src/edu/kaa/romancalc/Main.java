@@ -17,5 +17,8 @@ public class Main {
         Converter converter = new ConverterImpl();
 
         new Calc(linePreparing, lineCheck, converter).result();
+
+//        String str = "1+1+1";
+//        System.out.println(str.replaceAll("[0-9]", "").length());
     }
 }
