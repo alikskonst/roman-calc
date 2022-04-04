@@ -25,7 +25,7 @@ public class ConverterImpl implements Converter {
     @Override
     public String convert(int number) {
         if (number <= 0) {
-            throw new NegativeResultException();
+            throw new NegativeResultException("Римское число не может быть меньше или равно нулю");
         }
         if (number <= 10) {
             return ROME_MAP_10.get(number);
