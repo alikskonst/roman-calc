@@ -19,7 +19,7 @@ public class LinePreparingImpl implements LinePreparing {
         if (line.contains("*") || line.contains("/") || line.contains("+") || line.contains("-")) {
             return getPreparedArray(line);
         } else {
-            throw new NotFoundMathOperatorException();
+            throw new NotFoundMathOperatorException("строка не является математической операцией");
         }
     }
 
@@ -61,7 +61,7 @@ public class LinePreparingImpl implements LinePreparing {
         if (array.length == 2) {
             return new String[]{array[0], mathOperator, array[1]};
         } else {
-            throw new IncorrectExpressionException();
+            throw new IncorrectExpressionException("строка не является математической операцией");
         }
     }
 }
