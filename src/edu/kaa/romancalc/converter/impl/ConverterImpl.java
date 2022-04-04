@@ -2,6 +2,7 @@ package edu.kaa.romancalc.converter.impl;
 
 import edu.kaa.romancalc.converter.Converter;
 import edu.kaa.romancalc.exception.IncorrectExpressionException;
+import edu.kaa.romancalc.exception.NegativeResultException;
 
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +24,9 @@ public class ConverterImpl implements Converter {
 
     @Override
     public String convert(int number) {
+        if (number < 0) {
+            throw new NegativeResultException();
+        }
         if (number <= 10) {
             return ROME_MAP_10.get(number);
         }

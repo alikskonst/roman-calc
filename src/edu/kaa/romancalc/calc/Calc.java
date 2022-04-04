@@ -7,7 +7,7 @@ import edu.kaa.romancalc.calc.impl.Subtraction;
 import edu.kaa.romancalc.constants.CalcType;
 import edu.kaa.romancalc.converter.Converter;
 import edu.kaa.romancalc.exception.EmptySourceException;
-import edu.kaa.romancalc.exception.NegativeResultException;
+import edu.kaa.romancalc.exception.IncorrectExpressionException;
 import edu.kaa.romancalc.exception.NotFoundMathOperatorException;
 import edu.kaa.romancalc.exception.VariousNumberSystemsException;
 import edu.kaa.romancalc.line.LineCheck;
@@ -74,7 +74,11 @@ public class Calc {
 
     private int getNumber(String number) {
         if (NumberUtils.isNumber(number)) {
-            return Integer.parseInt(number);
+            int num = Integer.parseInt(number);
+            if (num > 10) {
+                throw new IncorrectExpressionException("Not more 10");
+            }
+            return num;
         } else if (NumberUtils.isRomanNumber(number)) {
             return converter.convert(number);
         }
@@ -85,9 +89,6 @@ public class Calc {
         if (calcType.equals(CalcType.ARABIAN)) {
             System.out.println("Result: " + result);
         } else if (calcType.equals(CalcType.ROMAN)) {
-            if (result < 0) {
-                throw new NegativeResultException();
-            }
             System.out.println("Result: " + converter.convert(result));
         }
     }
