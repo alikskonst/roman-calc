@@ -11,8 +11,8 @@ public class LineCheckImpl implements LineCheck {
     @Override
     public void checkExpression(String line) {
         String mathOperators = line.startsWith("-") ?
-                line.substring(1).replaceAll("[0-9]", "") :
-                line.replaceAll("[0-9]", "");
+                line.substring(1).replaceAll("[0-9a-zA-Z]", "") :
+                line.replaceAll("[0-9a-zA-Z]", "");
 
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < mathOperators.length(); i++) {
