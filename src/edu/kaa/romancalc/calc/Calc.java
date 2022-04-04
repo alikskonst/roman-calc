@@ -75,6 +75,9 @@ public class Calc {
     private int getNumber(String number) {
         if (NumberUtils.isNumber(number)) {
             int num = Integer.parseInt(number);
+            if (num == 0) {
+                throw new IncorrectExpressionException("You mustn't use 0 (zero)");
+            }
             if (num > 10) {
                 throw new IncorrectExpressionException("Not more 10");
             }
