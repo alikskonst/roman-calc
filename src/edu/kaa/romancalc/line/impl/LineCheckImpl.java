@@ -27,9 +27,7 @@ public class LineCheckImpl implements LineCheck {
 
     @Override
     public CalcType findOutType(String[] array) {
-        if (array[0] == null || array[2] == null) {
-            throw new IncorrectExpressionException("строка не является математической операцией");
-        } else if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[2])) {
+        if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[2])) {
             return CalcType.ARABIAN;
         } else if (NumberUtils.isRomanNumber(array[0]) && NumberUtils.isRomanNumber(array[2])) {
             return CalcType.ROMAN;
