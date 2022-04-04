@@ -27,11 +27,11 @@ public class LineCheckImpl implements LineCheck {
 
     @Override
     public CalcType findOutType(String[] array) {
-        if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[2])) {
+        if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[1])) {
             return CalcType.ARABIAN;
-        } else if (NumberUtils.isRomanNumber(array[0]) && NumberUtils.isRomanNumber(array[2])) {
+        } else if (NumberUtils.isRomanNumber(array[0]) && NumberUtils.isRomanNumber(array[1])) {
             return CalcType.ROMAN;
-        } else if (array[0].startsWith("-") || array[2].startsWith("-")) {
+        } else if (array[0].startsWith("-") || array[1].startsWith("-")) {
             throw new VariousNumberSystemsException("римские числа не могут быть отрицательными");
         }
         throw new VariousNumberSystemsException();

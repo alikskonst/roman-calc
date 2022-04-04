@@ -46,22 +46,22 @@ public class Calc {
             String[] array = linePreparing.getPreparedLine(line);
             CalcType calcType = lineCheck.findOutType(array);
             int result;
-            switch (array[1]) {
+            switch (array[2]) {
                 case "*":
                     MathOperation mathOperation = new Multiplication();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[2]));
+                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
                     break;
                 case "/":
                     mathOperation = new Division();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[2]));
+                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
                     break;
                 case "+":
                     mathOperation = new Addition();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[2]));
+                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
                     break;
                 case "-":
                     mathOperation = new Subtraction();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[2]));
+                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
                     break;
                 default:
                     throw new NotFoundMathOperatorException();

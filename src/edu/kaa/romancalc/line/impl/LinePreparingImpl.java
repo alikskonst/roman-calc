@@ -4,6 +4,7 @@ import edu.kaa.romancalc.exception.IncorrectExpressionException;
 import edu.kaa.romancalc.exception.NotFoundMathOperatorException;
 import edu.kaa.romancalc.line.LineCheck;
 import edu.kaa.romancalc.line.LinePreparing;
+import edu.kaa.romancalc.util.StringUtils;
 
 public class LinePreparingImpl implements LinePreparing {
 
@@ -58,10 +59,11 @@ public class LinePreparingImpl implements LinePreparing {
     }
 
     private String[] getArray(String[] array, String mathOperator) {
-        if (array.length == 2) {
-            return new String[]{array[0], mathOperator, array[1]};
-        } else {
+        if (StringUtils.isEmpty(array[0])) {
             throw new IncorrectExpressionException("строка не является математической операцией");
+        } else if (array.length == 2) {
+            return new String[]{array[0], array[1], mathOperator};
         }
+        throw new IncorrectExpressionException("строка не является математической операцией");
     }
 }
