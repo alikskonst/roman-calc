@@ -24,7 +24,7 @@ public class ConverterImpl implements Converter {
 
     @Override
     public String convert(int number) {
-        if (number < 0) {
+        if (number <= 0) {
             throw new NegativeResultException();
         }
         if (number <= 10) {
