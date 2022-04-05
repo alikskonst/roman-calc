@@ -15,7 +15,6 @@ public class Main {
         LineCheck lineCheck = new LineCheckImpl();
         LinePreparing linePreparing = new LinePreparingImpl(lineCheck);
         Converter converter = new ConverterImpl();
-
         new Calc(linePreparing, lineCheck, converter).result();
     }
 }
