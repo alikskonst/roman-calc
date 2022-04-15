@@ -10,7 +10,7 @@ import edu.kaa.romancalc.exception.IncorrectExpressionException;
 import edu.kaa.romancalc.exception.NotFoundMathOperatorException;
 import edu.kaa.romancalc.util.NumberUtils;
 import edu.kaa.romancalc.util.StringUtils;
-import edu.kaa.romancalc.validation.MathExpressionValidation;
+import edu.kaa.romancalc.validation.MathExpressionValidator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.io.InputStreamReader;
 
 public class Calc {
 
-    private final MathExpressionValidation mathExpressionValidation;
+    private final MathExpressionValidator mathExpressionValidator;
     private final Converter converter;
 
-    public Calc(MathExpressionValidation mathExpressionValidation,
+    public Calc(MathExpressionValidator mathExpressionValidator,
                 Converter converter) {
-        this.mathExpressionValidation = mathExpressionValidation;
+        this.mathExpressionValidator = mathExpressionValidator;
         this.converter = converter;
     }
 
@@ -37,7 +37,7 @@ public class Calc {
             throw new IncorrectExpressionException();
         }
         String[] array = line.split(mathOperator.contains("*") ? "\\*" : mathOperator.contains("+") ? "\\+" : mathOperator);
-        mathExpressionValidation.validation(array);
+        mathExpressionValidator.validation(array);
         boolean isRomanExpression = NumberUtils.isRomanNumber("" + line.charAt(0));
         int result;
         switch (mathOperator) {

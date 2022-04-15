@@ -4,9 +4,9 @@ import edu.kaa.romancalc.exception.IncorrectExpressionException;
 import edu.kaa.romancalc.exception.VariousNumberSystemsException;
 import edu.kaa.romancalc.util.NumberUtils;
 import edu.kaa.romancalc.util.StringUtils;
-import edu.kaa.romancalc.validation.MathExpressionValidation;
+import edu.kaa.romancalc.validation.MathExpressionValidator;
 
-public class MathExpressionValidationImpl implements MathExpressionValidation {
+public class MathExpressionValidatorImpl implements MathExpressionValidator {
 
     @Override
     public void validation(String[] array) {
