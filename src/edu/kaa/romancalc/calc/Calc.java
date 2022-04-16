@@ -81,18 +81,17 @@ public class Calc {
         }
     }
 
-    private int getNumber(String number) {
-        if (NumberUtils.isArabianNumber(number)) {
-            int num = Integer.parseInt(number);
-            if (num == 0) {
+    private int getNumber(String source) {
+        if (NumberUtils.isArabianNumber(source)) {
+            int number = Integer.parseInt(source);
+            if (number == 0) {
                 throw new IncorrectExpressionException("You mustn't use 0 (zero)");
-            }
-            if (num > 10) {
+            } else if (number > 10) {
                 throw new IncorrectExpressionException("Not more 10");
             }
-            return num;
-        } else if (NumberUtils.isRomanNumber(number)) {
-            return converter.convert(number);
+            return number;
+        } else if (NumberUtils.isRomanNumber(source)) {
+            return converter.convert(source);
         }
         throw new IncorrectExpressionException();
     }

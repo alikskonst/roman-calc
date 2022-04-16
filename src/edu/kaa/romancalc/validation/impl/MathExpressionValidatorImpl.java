@@ -12,21 +12,21 @@ public class MathExpressionValidatorImpl implements MathExpressionValidator {
     public void validation(String[] array) {
         // проверка размерности массива
         if (array.length != 2) {
-            throw new IncorrectExpressionException();
+            throw new IncorrectExpressionException("Некорректное выражение");
         }
         // проверка ячеек на пустоту
         if (StringUtils.isEmpty(array[0]) || StringUtils.isEmpty(array[1])) {
-            throw new IncorrectExpressionException();
+            throw new IncorrectExpressionException("Некорректное выражение");
         }
         // проверка на принадлежность к разным системам
         if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isRomanNumber(array[1])) {
-            throw new VariousNumberSystemsException();
+            throw new VariousNumberSystemsException("Разные системы счисления");
         } else if (NumberUtils.isArabianNumber(array[1]) && NumberUtils.isRomanNumber(array[0])) {
-            throw new VariousNumberSystemsException();
+            throw new VariousNumberSystemsException("Разные системы счисления");
         } else if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[1])) {
             // проверка на размерность (1 - 10)
             if (inRange(array[0]) || inRange(array[1])) {
-                throw new IncorrectExpressionException();
+                throw new IncorrectExpressionException("Выход за пределы возможностей системы (1 - 10)");
             }
         }
     }
