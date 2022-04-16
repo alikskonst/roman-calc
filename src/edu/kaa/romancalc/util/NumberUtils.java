@@ -11,6 +11,7 @@ public class NumberUtils {
         if (StringUtils.isEmpty(line)) {
             return false;
         }
+        // с учетом отрицательных чисел
         int start = line.startsWith("-") ? 1 : 0;
         for (int i = start; i < line.length(); ++i) {
             if (!Character.isDigit(line.charAt(i))) {
@@ -24,6 +25,9 @@ public class NumberUtils {
      * несет в себе существенный недостаток - проверка от 1 до 10
      */
     public static boolean isRomanNumber(String line) {
+        if (StringUtils.isEmpty(line)) {
+            return false;
+        }
         return ROME_MAP_10.containsValue(line.toUpperCase());
     }
 }

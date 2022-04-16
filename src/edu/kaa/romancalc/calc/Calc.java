@@ -4,16 +4,13 @@ import edu.kaa.romancalc.calc.impl.Addition;
 import edu.kaa.romancalc.calc.impl.Division;
 import edu.kaa.romancalc.calc.impl.Multiplication;
 import edu.kaa.romancalc.calc.impl.Subtraction;
-import edu.kaa.romancalc.constants.CalcType;
 import edu.kaa.romancalc.converter.Converter;
 import edu.kaa.romancalc.exception.EmptySourceException;
 import edu.kaa.romancalc.exception.IncorrectExpressionException;
 import edu.kaa.romancalc.exception.NotFoundMathOperatorException;
-import edu.kaa.romancalc.exception.VariousNumberSystemsException;
-import edu.kaa.romancalc.line.LineCheck;
-import edu.kaa.romancalc.line.LinePreparing;
 import edu.kaa.romancalc.util.NumberUtils;
 import edu.kaa.romancalc.util.StringUtils;
+import edu.kaa.romancalc.validation.MathExpressionValidator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,19 +18,54 @@ import java.io.InputStreamReader;
 
 public class Calc {
 
-    private final LinePreparing linePreparing;
-    private final LineCheck lineCheck;
+    private final MathExpressionValidator mathExpressionValidator;
     private final Converter converter;
 
-    public Calc(LinePreparing linePreparing, LineCheck lineCheck, Converter converter) {
-        this.linePreparing = linePreparing;
-        this.lineCheck = lineCheck;
+    public Calc(MathExpressionValidator mathExpressionValidator, Converter converter) {
+        this.mathExpressionValidator = mathExpressionValidator;
         this.converter = converter;
     }
 
     //------------------------------------------------------------------------------------------------------------------
 
     public void result() {
+
+        String line = readLine();
+        String mathOperator = line.replaceAll("[0-9a-zA-Z]", "");
+        if (mathOperator.length() != 1) {
+            throw new IncorrectExpressionException();
+        }
+
+        String[] array = line.split(mathOperator.contains("*") ? "\\*" : mathOperator.contains("+") ? "\\+" : mathOperator);
+        mathExpressionValidator.validation(array);
+
+        boolean isRomanExpression = NumberUtils.isRomanNumber("" + line.charAt(0));
+        int result;
+        switch (mathOperator) {
+            case "*":
+                Calculation calculation = new Multiplication();
+                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
+                break;
+            case "/":
+                calculation = new Division();
+                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
+                break;
+            case "+":
+                calculation = new Addition();
+                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
+                break;
+            case "-":
+                calculation = new Subtraction();
+                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
+                break;
+            default:
+                throw new NotFoundMathOperatorException();
+        }
+        System.out.print("Result: ");
+        System.out.print(isRomanExpression ? converter.convert(result) : result);
+    }
+
+    private String readLine() {
         System.out.print("Please enter mathematical expression: ");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String line = null;
@@ -43,56 +75,24 @@ public class Calc {
             System.out.println("Error: " + ex.getMessage());
         }
         if (StringUtils.isNotEmpty(line)) {
-            String[] array = linePreparing.getPreparedLine(line);
-            CalcType calcType = lineCheck.findOutType(array);
-            int result;
-            switch (array[2]) {
-                case "*":
-                    MathOperation mathOperation = new Multiplication();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
-                    break;
-                case "/":
-                    mathOperation = new Division();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
-                    break;
-                case "+":
-                    mathOperation = new Addition();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
-                    break;
-                case "-":
-                    mathOperation = new Subtraction();
-                    result = mathOperation.result(getNumber(array[0]), getNumber(array[1]));
-                    break;
-                default:
-                    throw new NotFoundMathOperatorException();
-            }
-            printResult(calcType, result);
+            return line;
         } else {
             throw new EmptySourceException("Empty line for math operation");
         }
     }
 
-    private int getNumber(String number) {
-        if (NumberUtils.isArabianNumber(number)) {
-            int num = Integer.parseInt(number);
-            if (num == 0) {
+    private int getNumber(String source) {
+        if (NumberUtils.isArabianNumber(source)) {
+            int number = Integer.parseInt(source);
+            if (number == 0) {
                 throw new IncorrectExpressionException("You mustn't use 0 (zero)");
-            }
-            if (num > 10) {
+            } else if (number > 10) {
                 throw new IncorrectExpressionException("Not more 10");
             }
-            return num;
-        } else if (NumberUtils.isRomanNumber(number)) {
-            return converter.convert(number);
+            return number;
+        } else if (NumberUtils.isRomanNumber(source)) {
+            return converter.convert(source);
         }
-        throw new VariousNumberSystemsException();
-    }
-
-    private void printResult(CalcType calcType, int result) {
-        if (calcType.equals(CalcType.ARABIAN)) {
-            System.out.println("Result: " + result);
-        } else if (calcType.equals(CalcType.ROMAN)) {
-            System.out.println("Result: " + converter.convert(result));
-        }
+        throw new IncorrectExpressionException();
     }
 }
