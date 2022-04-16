@@ -24,7 +24,7 @@ public class MathExpressionValidatorImpl implements MathExpressionValidator {
         } else if (NumberUtils.isArabianNumber(array[1]) && NumberUtils.isRomanNumber(array[0])) {
             throw new VariousNumberSystemsException("Разные системы счисления");
         } else if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[1])) {
-            // проверка на размерность (1 - 10)
+            // проверка на диапазон (1 - 10)
             if (inRange(array[0]) || inRange(array[1])) {
                 throw new IncorrectExpressionException("Выход за пределы возможностей системы (1 - 10)");
             }
