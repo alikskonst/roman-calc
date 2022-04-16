@@ -21,8 +21,7 @@ public class Calc {
     private final MathExpressionValidator mathExpressionValidator;
     private final Converter converter;
 
-    public Calc(MathExpressionValidator mathExpressionValidator,
-                Converter converter) {
+    public Calc(MathExpressionValidator mathExpressionValidator, Converter converter) {
         this.mathExpressionValidator = mathExpressionValidator;
         this.converter = converter;
     }
@@ -36,8 +35,10 @@ public class Calc {
         if (mathOperator.length() != 1) {
             throw new IncorrectExpressionException();
         }
+
         String[] array = line.split(mathOperator.contains("*") ? "\\*" : mathOperator.contains("+") ? "\\+" : mathOperator);
         mathExpressionValidator.validation(array);
+
         boolean isRomanExpression = NumberUtils.isRomanNumber("" + line.charAt(0));
         int result;
         switch (mathOperator) {
