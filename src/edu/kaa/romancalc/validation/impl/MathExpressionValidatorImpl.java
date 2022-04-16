@@ -25,11 +25,14 @@ public class MathExpressionValidatorImpl implements MathExpressionValidator {
             throw new VariousNumberSystemsException();
         } else if (NumberUtils.isArabianNumber(array[0]) && NumberUtils.isArabianNumber(array[1])) {
             // проверка на размерность (1 - 10)
-            int a = Integer.parseInt(array[0]);
-            int b = Integer.parseInt(array[1]);
-            if ((a < 0 || a > 10) || (b < 0 || b > 10)) {
+            if (inRange(array[0]) || inRange(array[1])) {
                 throw new IncorrectExpressionException();
             }
         }
+    }
+
+    private boolean inRange(String source) {
+        int number = Integer.parseInt(source);
+        return number < 0 || number > 10;
     }
 }
