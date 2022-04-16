@@ -11,6 +11,7 @@ public class NumberUtils {
         if (StringUtils.isEmpty(line)) {
             return false;
         }
+        // с учетом отрицательных чисел
         int start = line.startsWith("-") ? 1 : 0;
         for (int i = start; i < line.length(); ++i) {
             if (!Character.isDigit(line.charAt(i))) {
