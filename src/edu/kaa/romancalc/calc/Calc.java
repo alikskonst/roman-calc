@@ -42,6 +42,8 @@ public class Calc {
         System.out.print(isRomanExpression ? converter.convert(result) : result);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+
     private String readLine() {
         System.out.print("Please enter mathematical expression: ");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
