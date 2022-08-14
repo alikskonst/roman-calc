@@ -1,9 +1,5 @@
 package edu.kaa.romancalc.calc;
 
-import edu.kaa.romancalc.calc.impl.Addition;
-import edu.kaa.romancalc.calc.impl.Division;
-import edu.kaa.romancalc.calc.impl.Multiplication;
-import edu.kaa.romancalc.calc.impl.Subtraction;
 import edu.kaa.romancalc.converter.Converter;
 import edu.kaa.romancalc.exception.EmptySourceException;
 import edu.kaa.romancalc.exception.IncorrectExpressionException;
@@ -15,6 +11,9 @@ import edu.kaa.romancalc.validation.MathExpressionValidator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
+
+import static edu.kaa.romancalc.constants.Constants.CALCULATION_MAP;
 
 public class Calc {
 
@@ -29,38 +28,16 @@ public class Calc {
     //------------------------------------------------------------------------------------------------------------------
 
     public void result() {
-
         String line = readLine();
         String mathOperator = line.replaceAll("[0-9a-zA-Z]", "");
         if (mathOperator.length() != 1) {
             throw new IncorrectExpressionException();
         }
-
         String[] array = line.split(mathOperator.contains("*") ? "\\*" : mathOperator.contains("+") ? "\\+" : mathOperator);
         mathExpressionValidator.validation(array);
-
-        boolean isRomanExpression = NumberUtils.isRomanNumber("" + line.charAt(0));
-        int result;
-        switch (mathOperator) {
-            case "*":
-                Calculation calculation = new Multiplication();
-                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
-                break;
-            case "/":
-                calculation = new Division();
-                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
-                break;
-            case "+":
-                calculation = new Addition();
-                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
-                break;
-            case "-":
-                calculation = new Subtraction();
-                result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
-                break;
-            default:
-                throw new NotFoundMathOperatorException();
-        }
+        boolean isRomanExpression = NumberUtils.isRomanNumber(Character.toString(line.charAt(0)));
+        Calculation calculation = Optional.ofNullable(CALCULATION_MAP.get(mathOperator)).orElseThrow(NotFoundMathOperatorException::new);
+        int result = calculation.calculate(getNumber(array[0]), getNumber(array[1]));
         System.out.print("Result: ");
         System.out.print(isRomanExpression ? converter.convert(result) : result);
     }

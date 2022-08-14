@@ -1,5 +1,11 @@
 package edu.kaa.romancalc.constants;
 
+import edu.kaa.romancalc.calc.Calculation;
+import edu.kaa.romancalc.calc.impl.Addition;
+import edu.kaa.romancalc.calc.impl.Division;
+import edu.kaa.romancalc.calc.impl.Multiplication;
+import edu.kaa.romancalc.calc.impl.Subtraction;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +16,7 @@ public class Constants {
 
     public static final Map<Integer, String> ROME_MAP_10;
     public static final Map<Integer, String> ROME_MAP_100;
+    public static final Map<String, Calculation> CALCULATION_MAP;
 
     static {
         ROME_MAP_10 = new HashMap<>();
@@ -37,5 +44,13 @@ public class Constants {
         ROME_MAP_100.put(80, "LXXX");
         ROME_MAP_100.put(90, "XC");
         ROME_MAP_100.put(100, "C");
+    }
+
+    static {
+        CALCULATION_MAP = new HashMap<>();
+        CALCULATION_MAP.put("*", new Multiplication());
+        CALCULATION_MAP.put("/", new Division());
+        CALCULATION_MAP.put("+", new Addition());
+        CALCULATION_MAP.put("-", new Subtraction());
     }
 }
